@@ -12,3 +12,16 @@
 .item a.activeClass {
     color: gold;
 }
+
+.friendBlock {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.friendBlock img {
+    width: 30px;
+}
+.friendBlockTitle {
+    text-align: center;
+}

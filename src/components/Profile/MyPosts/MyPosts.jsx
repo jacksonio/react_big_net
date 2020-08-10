@@ -4,25 +4,30 @@ import Post from './Post/Post';
 
 const MyPosts = (props) => {
 
-    const postData = [
-        { id: 1, message: 'Hi my name is Jack', likesCount: 4},
-        { id: 2, message: 'lorem ipsum', likesCount: 123},
-        { id: 3, message: 'It\'s my first post', likesCount: 1},
-    ]
+    let newPostElement = React.createRef()
+
+    const addPost = () => {
+        props.addPost();
+    }
+
+    const onPostChange = () => {
+        let text = newPostElement.current.value;
+        props.updateNewPostText(text)
+    }
 
     return (
         <div className={s.PostsBlock}>
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea />
+                    <textarea onChange={onPostChange} ref={newPostElement} value={props.newProfileText}/>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
-                {postData.map((post => <Post id={post.id} message={post.message} likesCount={post.likesCount} />))}
+                {props.posts.map((post => <Post id={post.id} message={post.message} likesCount={post.likesCount}/>))}
             </div>
         </div>
     )
