@@ -6,14 +6,15 @@ import {addPostActionCreator, updatePostTextActionCreator} from "../../../redux/
 
 const MyPosts = (props) => {
 
+    const state = props.store.getState().profilePage;
     const addPost = () => {
-        props.dispatch(addPostActionCreator());
+        props.store.dispatch(addPostActionCreator());
     }
 
     const onPostChange = (e) => {
 
         let text = e.target.value;
-        props.dispatch(updatePostTextActionCreator(text))
+        props.store.dispatch(updatePostTextActionCreator(text))
     }
 
     return (
@@ -21,14 +22,14 @@ const MyPosts = (props) => {
             <h3>My posts</h3>
             <div>
                 <div>
-                    <textarea onChange={onPostChange} value={props.newProfileText}/>
+                    <textarea onChange={onPostChange} value={state.newProfileText}/>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={s.posts}>
-                {props.posts.map((post => <Post id={post.id} message={post.message} likesCount={post.likesCount}/>))}
+                {state.posts.map((post => <Post id={post.id} message={post.message} likesCount={post.likesCount}/>))}
             </div>
         </div>
     )

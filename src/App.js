@@ -13,20 +13,17 @@ export const App = (props) => {
     return (
         <div className='app-wrapper'>
             <Header/>
-            <Navbar friends={props.state.sidebar.friends}/>
+            <Navbar
+                store={props.store}
+            />
             <div className='app-wrapper-content'>
                 <Route path='/profile'
                        render={() => <Profile
-                           profilePage={props.state.profilePage}
-                           dispatch={props.dispatch}
+                           store={props.store}
                        />}
                 />
                 <Route path='/dialogs' render={() => <Dialogs
-                    {...props}
-                    messages={props.state.messagesPage.messages}
-                    dialogs={props.state.messagesPage.dialogs}
-                    dispatch={props.dispatch}
-                    newMessageText={props.state.messagesPage.newMessageText}
+                    store={props.store}
                 />}
                 />
                 <Route path='/settings' component={Settings}/>
