@@ -1,10 +1,13 @@
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
+
 let store = {
     _state: {
         profilePage: {
             posts: [
-                { id: 1, message: 'Hi my name is Jack', likesCount: 999},
-                { id: 2, message: 'lorem ipsum', likesCount: 123},
-                { id: 3, message: 'It\'s my first post', likesCount: 1},
+                {id: 1, message: 'Hi my name is Jack', likesCount: 999},
+                {id: 2, message: 'lorem ipsum', likesCount: 123},
+                {id: 3, message: 'It\'s my first post', likesCount: 1},
             ],
             newProfileText: ''
         },
@@ -46,38 +49,15 @@ let store = {
             ]
         }
     },
+    _callSubscriber() {},
+    dispatch(action) {
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action)
+        this._callSubscriber(this._state)
+    },
     getState() {
-      return this._state;
-    },
-    _callSubscriber() {
-        console.log('ss')
-    },
-    addPost() {
-        const newPost = {
-            id: 6,
-            message: this._state.profilePage.newProfileText,
-            likesCount: 777
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newProfileText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewPostText(newText) {
-        this._state.profilePage.newProfileText = newText;
-        this._callSubscriber(this._state)
-    },
-    addMessage() {
-        const newMessage = {
-            id: 6,
-            message: this._state.messagesPage.newMessageText,
-        }
-        this._state.messagesPage.messages.push(newMessage)
-        this._state.messagesPage.newMessageText = ''
-        this._callSubscriber(this._state)
-    },
-    updateNewMessageText(newText) {
-        this._state.messagesPage.newMessageText = newText;
-        this._callSubscriber(this._state)
+        return this._state;
     },
     subscribe(observer) {
         this._callSubscriber = observer
