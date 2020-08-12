@@ -18,20 +18,21 @@ export const profileReducer = (state = initialState, action) => {
                 message: state.newProfileText,
                 likesCount: 0
             }
-            state.posts.push(newPost)
-            state.newProfileText = ''
-            break
+            let stateCopy = {...state}
+            stateCopy.posts = [...state.posts]
+            stateCopy.posts.push(newPost)
+            stateCopy.newProfileText = ''
+            return stateCopy
         }
         case UPDATE_NEW_POST_TEXT : {
-            state.newProfileText = action.newText
-            break
+            let stateCopy = {...state}
+            stateCopy.newProfileText = action.newText
+            return stateCopy
         }
         default: {
-            return state
+            return {...state}
         }
     }
-
-    return state
 }
 
 export const addPostActionCreator = () => ({ type: ADD_POST })

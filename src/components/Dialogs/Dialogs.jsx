@@ -4,8 +4,8 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 const Dialogs = (props) => {
 
-    let dialogsElements = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
-    let messagesElements = props.state.messages.map(m => <Message message={m.message}/>);
+    let dialogsElements = props.dialogsStore.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>);
+    let messagesElements = props.dialogsStore.messages.map(m => <Message message={m.message}/>);
 
     const submitHandler = () => {
         props.submitHandler()
@@ -21,7 +21,7 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 <div>
-                    <textarea onChange={onChangeHandler} value={props.state.newMessageText}/>
+                    <textarea onChange={onChangeHandler} value={props.dialogsStore.newMessageText}/>
                 </div>
                 <div>
                     <button onClick={submitHandler}>Add</button>

@@ -3,7 +3,6 @@ import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 
 const Navbar = (props) => {
-    const state = props.store.getState().sidebar;
     return (
         <nav className={s.nav}>
             <div>
@@ -28,7 +27,7 @@ const Navbar = (props) => {
             </div>
             <div className={s.friendBlock}>
 
-                {state.friends.map(friend => (
+                {props.sidebar.friends.map(friend => (
                     <div>
                         <img src={friend.url}  alt="avatar"/>
                         <p>{friend.name}</p>

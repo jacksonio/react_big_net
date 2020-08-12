@@ -36,11 +36,11 @@ export const dialogsReducer = (state = initialState, action) => {
             break
         }
         default: {
-            return state
+            return {...state}
         }
     }
 
-    return state
+    return {...state}
 }
 
 
