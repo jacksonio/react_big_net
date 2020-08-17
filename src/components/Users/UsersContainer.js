@@ -14,7 +14,9 @@ import Loader from "../Loader/Loader";
 class UsersContainer extends React.Component {
     componentDidMount() {
         if (this.props.users.length === 0) {
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+                withCredentials: true,
+            })
                 .then(response => {
                     this.props.setUsers(response.data.items)
                     this.props.setTotalUsersCount(response.data.totalCount)
@@ -26,7 +28,9 @@ class UsersContainer extends React.Component {
     onPageChange = (page) => {
         this.props.toggleLoading(true)
         this.props.setCurrentPage(page)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
+            withCredentials: true,
+        })
             .then(response => {
                 this.props.setUsers(response.data.items)
                 this.props.toggleLoading(false)
