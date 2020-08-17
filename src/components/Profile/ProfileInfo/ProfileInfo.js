@@ -1,16 +1,47 @@
 import React from "react";
 import classes from './ProfileInfo.module.css'
-export default () => {
+export default (props) => {
+    if(!props.profile) {
+        return <div>Пользователь не предоставил информации о себе</div>
+    }
+    const contacts = props.profile.contacts;
+
     return (
         <>
-            <div>
-                <img
-                    src='https://images.pexels.com/photos/248797/pexels-photo-248797.jpeg?auto=compress&cs=tinysrgb&h=350'
-                    alt={'profile_img'}/>
-            </div>
             <div className={classes.profileDescription}>
-                ava + description
+                <img src={props.profile.photos.large} alt="profilePhoto"/>
+                <div>
+                    Full name : {props.profile.fullName}
+                </div>
+                <div>
+                    About me : {props.profile.aboutMe}
+                </div>
+                <pre>
+                    {`My contacts:
+    Facebook: ${contacts.facebook ? contacts.facebook : 'Нет аккаунта'}
+    Website: ${contacts.website ? contacts.website : 'Нет аккаунта'}
+    VK: ${contacts.vk ? contacts.vk : 'Нет аккаунта'}
+    twitter: ${contacts.twitter ? contacts.twitter : 'Нет аккаунта'}
+    youtube: ${contacts.youtube ? contacts.youtube : 'Нет аккаунта'}
+    github: ${contacts.github ? contacts.github : 'Нет аккаунта'}
+    mainLink: ${contacts.mainLink ? contacts.mainLink : 'Нет аккаунта'}
+     `}
+                </pre>
+                <div>
+                    Робота: {props.profile.lookingForAJob ? 'В активном поиске' : 'Работаю'}
+                </div>
+                <div>
+                    Job description: {props.profile.lookingForAJobDescription}
+                </div>
             </div>
         </>
     )
 }
+
+//: null,
+//     "vk": "vk.com/dimych",
+//     "twitter": "https://twitter.com/@sdf",
+//     "instagram": "instagra.com/sds",
+//     "youtube": null,
+//     "github": "github.com",
+//     "mainLink": null
