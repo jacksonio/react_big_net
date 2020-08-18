@@ -4,35 +4,29 @@ import {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    toggleLoading
+    toggleLoading, followingInProgress
 } from "../../redux/users-reducer";
 import {connect} from "react-redux";
-import axios from 'axios'
 import Users from "./Users";
 import Loader from "../Loader/Loader";
+import {usersAPI} from "../../api/api";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
         if (this.props.users.length === 0) {
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-                withCredentials: true,
-            })
-                .then(response => {
-                    this.props.setUsers(response.data.items)
-                    this.props.setTotalUsersCount(response.data.totalCount)
-                    this.props.toggleLoading(false)
-                });
+            usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
+                this.props.setUsers(data.items)
+                this.props.setTotalUsersCount(data.totalCount)
+                this.props.toggleLoading(false)
+            });
         }
     }
 
     onPageChange = (page) => {
         this.props.toggleLoading(true)
         this.props.setCurrentPage(page)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`, {
-            withCredentials: true,
-        })
-            .then(response => {
-                this.props.setUsers(response.data.items)
+        usersAPI.getUsers(page, this.props.pageSize).then(data => {
+                this.props.setUsers(data.items)
                 this.props.toggleLoading(false)
             });
     }
@@ -41,7 +35,7 @@ class UsersContainer extends React.Component {
     render() {
 
         return this.props.isLoading
-            ? <Loader />
+            ? <Loader/>
             : <Users
                 currentPage={this.props.currentPage}
                 totalUsersCount={this.props.totalUsersCount}
@@ -49,7 +43,8 @@ class UsersContainer extends React.Component {
                 onPageChange={this.onPageChange}
                 users={this.props.users}
                 toggleFollowing={this.props.toggleFollowing}
-
+                followingInProgress={this.props.followingInProgress}
+                isFollowingInProgress={this.props.isFollowingInProgress}
             />
 
     }
@@ -62,7 +57,8 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         pageSize: state.usersPage.pageSize,
         currentPage: state.usersPage.currentPage,
-        isLoading: state.usersPage.isLoading
+        isLoading: state.usersPage.isLoading,
+        isFollowingInProgress: state.usersPage.isFollowingInProgress
     }
 }
 
@@ -71,7 +67,8 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    toggleLoading
+    toggleLoading,
+    followingInProgress
 })(UsersContainer)
 
 
