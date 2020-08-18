@@ -37,11 +37,3 @@ export default (props) => {
         </>
     )
 }
-
-//: null,
-//     "vk": "vk.com/dimych",
-//     "twitter": "https://twitter.com/@sdf",
-//     "instagram": "instagra.com/sds",
-//     "youtube": null,
-//     "github": "github.com",
-//     "mainLink": null

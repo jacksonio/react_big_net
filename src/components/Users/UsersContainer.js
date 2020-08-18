@@ -4,31 +4,21 @@ import {
     setUsers,
     setCurrentPage,
     setTotalUsersCount,
-    toggleLoading, followingInProgress
+    toggleLoading, followingInProgress, getUsersThunkCreator, followingUser, unfollowingUser
 } from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";
 import Loader from "../Loader/Loader";
-import {usersAPI} from "../../api/api";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
         if (this.props.users.length === 0) {
-            usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-                this.props.setUsers(data.items)
-                this.props.setTotalUsersCount(data.totalCount)
-                this.props.toggleLoading(false)
-            });
+            this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
         }
     }
 
     onPageChange = (page) => {
-        this.props.toggleLoading(true)
-        this.props.setCurrentPage(page)
-        usersAPI.getUsers(page, this.props.pageSize).then(data => {
-                this.props.setUsers(data.items)
-                this.props.toggleLoading(false)
-            });
+        this.props.getUsersThunkCreator(page, this.props.pageSize)
     }
 
 
@@ -42,8 +32,8 @@ class UsersContainer extends React.Component {
                 pageSize={this.props.pageSize}
                 onPageChange={this.onPageChange}
                 users={this.props.users}
-                toggleFollowing={this.props.toggleFollowing}
-                followingInProgress={this.props.followingInProgress}
+                followingUser={this.props.followingUser}
+                unfollowingUser={this.props.unfollowingUser}
                 isFollowingInProgress={this.props.isFollowingInProgress}
             />
 
@@ -63,12 +53,9 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    toggleFollowing,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleLoading,
-    followingInProgress
+    getUsersThunkCreator,
+    followingUser,
+    unfollowingUser
 })(UsersContainer)
 
 

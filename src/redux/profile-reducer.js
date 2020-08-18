@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE='SET_USER_PROFILE'
@@ -44,4 +46,10 @@ export const updatePostTextActionCreator = (text) => ({
     newText: text
 })
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile})
+
+export const setUserProfileThunk = (userId) => dispatch => {
+    usersAPI.getUserProfile(userId).then(data => {
+               dispatch(setUserProfile(data))
+            });
+}
 
