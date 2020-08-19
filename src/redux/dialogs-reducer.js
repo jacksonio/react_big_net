@@ -21,6 +21,7 @@ const initialState = {
 }
 
 export const dialogsReducer = (state = initialState, action) => {
+
     switch (action.type) {
         case ADD_MESSAGE : {
             const newMessage = {

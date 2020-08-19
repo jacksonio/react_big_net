@@ -1,10 +1,6 @@
 import React from 'react';
 import {
-    toggleFollowing,
-    setUsers,
-    setCurrentPage,
-    setTotalUsersCount,
-    toggleLoading, followingInProgress, getUsersThunkCreator, followingUser, unfollowingUser
+   getUsersThunkCreator, followingUser, unfollowingUser
 } from "../../redux/users-reducer";
 import {connect} from "react-redux";
 import Users from "./Users";

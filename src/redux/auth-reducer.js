@@ -1,4 +1,3 @@
-import axios from "axios";
 import {usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
@@ -21,8 +20,6 @@ export const authReducer = (state = initialState, action) => {
             return {...state}
         }
     }
-
-    return {...state}
 }
 
 export const setUserData = (data) => ({type: SET_USER_DATA, data})

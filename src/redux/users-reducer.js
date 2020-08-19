@@ -14,7 +14,6 @@ const initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isLoading: true,
-    // isFollowingInProgress: false
     isFollowingInProgress: []
 }
 
@@ -34,9 +33,6 @@ export const usersReducer = (state = initialState, action) => {
         case SET_USERS: {
             return {...state, users: [...action.users] }
         }
-        // case FOLLOWING_IN_PROGRESS: {
-        //     return {...state, isFollowingInProgress: action.following}
-        // }
         case FOLLOWING_IN_PROGRESS: {
             return {...state,
                 isFollowingInProgress: action.following

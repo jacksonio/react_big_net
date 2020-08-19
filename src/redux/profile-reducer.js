@@ -1,4 +1,5 @@
 import {usersAPI} from "../api/api";
+import {toggleLoading} from "./users-reducer";
 
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const ADD_POST = 'ADD_POST'
@@ -48,8 +49,10 @@ export const updatePostTextActionCreator = (text) => ({
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile})
 
 export const setUserProfileThunk = (userId) => dispatch => {
+    dispatch(toggleLoading(true))
     usersAPI.getUserProfile(userId).then(data => {
-               dispatch(setUserProfile(data))
-            });
+        dispatch(setUserProfile(data))
+        dispatch(toggleLoading(false))
+    });
 }
 

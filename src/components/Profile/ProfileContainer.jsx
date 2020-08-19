@@ -1,8 +1,10 @@
 import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import { setUserProfileThunk} from "../../redux/profile-reducer";
-import { withRouter } from "react-router-dom";
+import {setUserProfileThunk} from "../../redux/profile-reducer";
+import {withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
@@ -11,20 +13,25 @@ class ProfileContainer extends React.Component {
     }
 
 
-
     render() {
-      return <Profile {...this.props} />
-  }
+        return <Profile
+            isLoading={this.props.isLoading}
+            {...this.props}
+        />
+    }
 }
 
 let mapStateToProps = (state) => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
+    isLoading: state.usersPage.isLoading,
 })
 
-let mapDispatchToProps =  {
+let mapDispatchToProps = {
     setUserProfileThunk
 }
 
-let profileComponentWithRouterParams = withRouter(ProfileContainer)
-
-export default connect(mapStateToProps, mapDispatchToProps)(profileComponentWithRouterParams);
+export default compose(
+    withAuthRedirect,
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(ProfileContainer)
