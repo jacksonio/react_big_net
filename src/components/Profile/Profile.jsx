@@ -9,7 +9,12 @@ const Profile = (props) => {
             {props.isLoading
                 ? <Loader/>
                 : <>
-                    <ProfileInfo profile={props.profile}/>
+                    <ProfileInfo
+                        profile={props.profile}
+                        status={props.status}
+                        // updateUserStatusThunk={props.updateUserStatusThunk}
+                        />
+
                     <MyPostsContainer/>
                 </>
             }
