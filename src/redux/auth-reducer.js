@@ -1,6 +1,7 @@
-import {usersAPI} from "../api/api";
+import {profileAPI, usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
+const LOGIN_USER='LOGIN_USER'
 
 const initialState = {
     userId: null,
@@ -32,3 +33,8 @@ export const setUserDataThunk = () => dispatch => {
             }
         });
 }
+
+export const loginUserThunk = (userData) => {
+    profileAPI.loginInSystem(userData).then(response => console.log(response))
+}
+

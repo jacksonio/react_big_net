@@ -1,7 +1,6 @@
 import {profileAPI, usersAPI} from "../api/api";
 import {toggleLoading} from "./users-reducer";
 
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const ADD_POST = 'ADD_POST'
 const SET_USER_PROFILE='SET_USER_PROFILE'
 const SET_STATUS='SET_STATUS'
@@ -14,7 +13,6 @@ const initialState = {
     ],
     profile: null,
     status: '',
-    newProfileText: ''
 }
 
 export const profileReducer = (state = initialState, action) => {
@@ -22,20 +20,16 @@ export const profileReducer = (state = initialState, action) => {
         case ADD_POST : {
             const newPost = {
                 id: 6,
-                message: state.newProfileText,
+                message: action.postText,
                 likesCount: 0
             }
             return  {
                 ...state,
                 posts: [...state.posts, newPost],
-                newProfileText: ''
             }
         }
         case SET_STATUS: {
             return {...state, status: action.status}
-        }
-        case UPDATE_NEW_POST_TEXT : {
-            return  {...state, newProfileText: action.newText}
         }
         case SET_USER_PROFILE: {
             return {...state, profile: action.userProfile}
@@ -46,12 +40,8 @@ export const profileReducer = (state = initialState, action) => {
     }
 }
 
-export const addPostActionCreator = () => ({ type: ADD_POST })
+export const addPostActionCreator = (postText) => ({ type: ADD_POST, postText })
 export const setUserStatus = (status) => ({ type: SET_STATUS, status})
-export const updatePostTextActionCreator = (text) => ({
-    type: UPDATE_NEW_POST_TEXT,
-    newText: text
-})
 export const setUserProfile = (userProfile) => ({type: SET_USER_PROFILE, userProfile})
 
 export const setUserProfileThunk = (userId) => dispatch => {
